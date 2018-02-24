@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1.5">
+
+        <EditText
+            android:layout_margin="8dp"
+            android:id="@+id/etSearch"
+            android:hint="Search"
+            android:layout_weight="1.5"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="15dp"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:background="@drawable/edit_text_disagn"
+            tools:ignore="EllipsizeMaxLines" />
+
+
+        <ImageView
+            android:id="@+id/ivSearch"
+            android:background="@drawable/edit_text_disagn"
+            android:padding="2dp"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:src="@android:drawable/ic_menu_search"
+            android:layout_height="wrap_content"
+            tools:ignore="contentDescription" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="8.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <TextView
+                android:id="@+id/tvPhoneticSpelling"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/ivPlayAudioButton"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center"
+                android:src="@drawable/playaudiobutton"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:id="@+id/tvWord"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="45dp"/>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false"
+            android:fillViewport="false">
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:padding="@dimen/textpadding"/>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>
+
