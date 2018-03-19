@@ -1,7 +1,7 @@
 package com.bisoft.dictionary.fragment;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,23 +13,31 @@ import com.bisoft.dictionary.model.WordObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouriteFragment extends Fragment {
+
+/**
+ * Created by burakisik on 18.03.2018.
+ */
+
+public class AllWordsFragment extends Fragment {
+
     ListView list;
-    public FavouriteFragment() {
+    public AllWordsFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favourite, container, false);
+        View view = inflater.inflate(R.layout.fragment_allwords, container, false);
+
         list=(ListView) view.findViewById(R.id.listview);
         getFavouriteWords();
-        /*
+
+       /*
         ArrayAdapter<String> adapter=new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, android.R.id.text1, array);
         list.setAdapter(adapter);
-        */
+      */
         return view;
     }
 

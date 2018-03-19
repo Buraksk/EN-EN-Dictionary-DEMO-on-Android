@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.bisoft.dictionary.DictionaryHttpClient;
 import com.bisoft.dictionary.model.WordObject;
 
 import org.json.JSONArray;

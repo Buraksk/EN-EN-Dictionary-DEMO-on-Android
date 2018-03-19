@@ -20,10 +20,10 @@ import com.bisoft.dictionary.R;
 import com.bisoft.dictionary.client.HttpClientAsyncTask;
 import com.bisoft.dictionary.client.HttpClientCallback;
 import com.bisoft.dictionary.constants.Constant;
+import com.bisoft.dictionary.helper.AllWordsDBHelper;
 import com.bisoft.dictionary.model.WordObject;
 import com.bisoft.dictionary.parser.JSONParseAsyncTask;
 import com.bisoft.dictionary.parser.JSONParseCallback;
-
 
 /**
  * Created by burakisik on 24.02.2018.
@@ -39,7 +39,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     TextView tvWord;
     ImageView ivPlayAudioButton;
 
-   /* public HomeFragment(Context mContext){
+    /*
+    public HomeFragment(Context mContext){
         this.mContext = mContext;
     }*/
 
@@ -79,6 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         ivPlayAudioButton.setVisibility(View.INVISIBLE);
         tvPhoneticSpelling.setVisibility(View.INVISIBLE);
+        tvWord.setVisibility(View.INVISIBLE);
         tvResult.setVisibility(View.INVISIBLE);
 
         v = getActivity().getCurrentFocus();
@@ -86,7 +88,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
-
         client();
     }
 
@@ -116,16 +117,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 if(word != null) {
                     Log.i("word:", word.getWord());
                     Log.i("defination:", word.getDefinition());
-                    Log.i("spelling", word.getPhoneSpelling());
-                    Log.i("audiopath", word.getAudioPath());
+                    Log.i("spelling:", word.getPhoneSpelling());
+                    Log.i("audiopath:", word.getAudioPath());
 
                     ivPlayAudioButton.setVisibility(View.VISIBLE);
                     tvPhoneticSpelling.setVisibility(View.VISIBLE);
                     tvResult.setVisibility(View.VISIBLE);
+                    tvWord.setVisibility(View.VISIBLE);
 
                     tvWord.setText(word.word);
                     tvPhoneticSpelling.setText(word.phoneSpelling);
                     tvResult.setText(word.definition);
+
+                    //adding word in local database
+                    AllWordsDBHelper db = new AllWordsDBHelper(getActivity());
+                    if(!db.search(word.word.toLowerCase())){
+                        db.insertWord(word);
+                    }
+                    db.close();
                 }
             }
         },getContext());

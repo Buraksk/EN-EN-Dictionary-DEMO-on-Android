@@ -10,15 +10,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.bisoft.dictionary.activity.SettingsActivity;
+import com.bisoft.dictionary.fragment.AllWordsFragment;
 import com.bisoft.dictionary.fragment.FavouriteFragment;
 import com.bisoft.dictionary.fragment.HomeFragment;
 
 public class MainActivity extends AppCompatActivity{
     private DrawerLayout mDrawerLayout;
+
+    public int mState = 1; //where you want to trigger the hide action
+    //mState = 1; to hide or mState = 0; to show
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,10 @@ public class MainActivity extends AppCompatActivity{
         fragmentTransaction.replace(R.id.content_frame, fragment, "home");
         fragmentTransaction.commit();
 
+        //invalidateOptionsMenu(); // now onCreateOptionsMenu(...) is called again
+
+
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -47,7 +60,6 @@ public class MainActivity extends AppCompatActivity{
                         menuItem.setChecked(true);
                         // close drawer when item is clicked
                         mDrawerLayout.closeDrawers();
-
 
                         Fragment fragment =null;
 
@@ -60,6 +72,9 @@ public class MainActivity extends AppCompatActivity{
                                         android.R.anim.fade_out);
                                 fragmentTransaction.replace(R.id.content_frame, fragment, "home");
                                 fragmentTransaction.commit();
+
+                                 mState =1;
+
                                 break;
                             case R.id.nav_favourite:
                                 fragment = new FavouriteFragment();
@@ -69,13 +84,26 @@ public class MainActivity extends AppCompatActivity{
                                 fragmentTransaction.replace(R.id.content_frame, fragment, "home");
                                 fragmentTransaction.commit();
                                 //fragmentTransaction.replace(R.id.content_frame, fragment, "favourite");
+                                mState =0;
+                                break;
+                            case R.id.nav_allWords:
+                                fragment = new AllWordsFragment();
+                                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                                        android.R.anim.fade_out);
+                                fragmentTransaction.replace(R.id.content_frame, fragment, "home");
+                                fragmentTransaction.commit();
+                                //fragmentTransaction.replace(R.id.content_frame, fragment, "favourite");
+                                mState =0;
                                 break;
                             case R.id.nav_settings:
                                 // launch new intent instead of loading fragment
                                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                                 mDrawerLayout.closeDrawers();
-                                return true;
+                                mState =0;
+                                break;
                         }
+                        invalidateOptionsMenu(); // now onCreateOptionsMenu(...) is called again
                         return true;
                     }
                 });
@@ -100,6 +128,7 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onDrawerStateChanged(int newState) {
                         // state changes
+
                     }
                 }
         );
@@ -107,12 +136,35 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
+
+        if(!(item.getItemId()==R.id.add_favourite)) {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(Gravity.START);
+            } else {
+                mDrawerLayout.openDrawer(Gravity.START);
+            }
         }
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // inflate menu from xml
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        Log.i("oncreateoptionmenu","girdi");
+        if (mState == 1) //1 is true, 0 is false
+        {
+            //hide only option 2
+            //menu.getItem(1).setVisible(false);
+            menu.setGroupVisible(R.id.actionbar_element,true);
+            //mState=0;
+
+        }else{
+            menu.setGroupVisible(R.id.actionbar_element,false);
+            //mState=1;
+        }
+        return true;
     }
 }
 
