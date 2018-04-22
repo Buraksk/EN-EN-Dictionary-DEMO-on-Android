@@ -65,7 +65,7 @@ public class JSONParseAsyncTask extends AsyncTask<String, Object, WordObject>{
 
 
                 JSONArray resultsArr = jsonData.getJSONArray("results");
-                word.word =resultsArr.getJSONObject(0).get("id").toString();
+                word.setWord(resultsArr.getJSONObject(0).get("id").toString());
 
                 JSONArray lexicalEntriesArr = resultsArr.getJSONObject(0).getJSONArray("lexicalEntries");
                 JSONArray entriesArr = lexicalEntriesArr.getJSONObject(0).getJSONArray("entries");
@@ -74,21 +74,23 @@ public class JSONParseAsyncTask extends AsyncTask<String, Object, WordObject>{
                 JSONArray pronunciationsArr =  lexicalEntriesArr.getJSONObject(0).getJSONArray("pronunciations");
 
 
-                word.phoneSpelling = pronunciationsArr.getJSONObject(0).getString("phoneticSpelling");
+                word.setPhoneSpelling(pronunciationsArr.getJSONObject(0).getString("phoneticSpelling"));
                 String audioFilePath="";
                 if(pronunciationsArr.getJSONObject(0).getString("audioFile") != null) {
                     audioFilePath = pronunciationsArr.getJSONObject(0).get("audioFile").toString();
-                    word.audioPath = audioFilePath;
+                    word.setAudioPath(audioFilePath);
                 }
                 String definition="";
-                word.definition ="";
+                word.setDefinition("");
                 for(int i=0;i<sensesArr.length();i++)
                 {
                     JSONObject object= sensesArr.getJSONObject(i);
                     JSONArray defArr = object.getJSONArray("definitions");
-                    definition =" " + (i+1)+ "." + defArr.getString(0);
-                    word.definition += definition + "\n\n";
+                    definition +=" " + (i+1)+ "." + defArr.getString(0) +"\n\n";
+
+                    //word.definition += definition + "\n\n";
                 }
+                word.setDefinition(definition);
                 Log.d("Temp isssssssss",resultsArr.toString());
 
                 //ivPlayAudioButton.setVisibility(View.VISIBLE);

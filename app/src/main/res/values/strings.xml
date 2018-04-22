@@ -10,4 +10,8 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="myemailaddress1">buraksk94@gmail.com</string>
     <string name="myemailaddress2">buraksk70@gmail.com</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="my_cart">My Cart</string>
+    <string name="delete">DELETE</string>
 </resources>

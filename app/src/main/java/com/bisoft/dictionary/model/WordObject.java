@@ -5,18 +5,21 @@ package com.bisoft.dictionary.model;
  */
 
 public class WordObject {
-    public String word;
-    public String definition;
-    public String phoneSpelling;
-    public String audioPath;
+    private String word;
+    private String definition;
+    private String phoneSpelling;
+    private String audioPath;
+
+    private boolean favouriteFlag = false; //default value
 
     public WordObject(){};
 
-    public WordObject(String word, String definition, String phoneSpelling, String audioPath) {
+    public WordObject(String word, String definition, String phoneSpelling, String audioPath,Boolean favouriteFlag) {
         this.word = word;
         this.definition = definition;
         this.phoneSpelling = phoneSpelling;
         this.audioPath = audioPath;
+        this.favouriteFlag = favouriteFlag;
     }
 
     public String getWord() {
@@ -49,5 +52,13 @@ public class WordObject {
 
     public void setAudioPath(String audioPath) {
         this.audioPath = audioPath;
+    }
+
+    public boolean isFavouriteFlag() {
+        return favouriteFlag;
+    }
+
+    public void setFavouriteFlag(boolean favouriteFlag) {
+        this.favouriteFlag = favouriteFlag;
     }
 }
